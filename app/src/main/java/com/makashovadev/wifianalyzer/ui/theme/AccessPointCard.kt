@@ -1,5 +1,6 @@
 package com.makashovadev.wifianalyzer.ui.theme
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,10 +46,12 @@ fun AccessPointCard(
     onInfoClickListener: () -> Unit, // обработчик нажатия на кнопку "Инфо"
 ) {
     Card(
-        modifier = modifier
+        modifier = modifier,
+            border = BorderStroke(2.dp,MaterialTheme.colorScheme.secondary)
     ) {
         Column(
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
                 .padding(8.dp)
         ) {
             PointHeader(accessPoint)

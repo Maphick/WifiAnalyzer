@@ -19,7 +19,8 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = tertiary_dark,
     onPrimary = on_primary_dark,
     onSecondary = on_secondary_dark,
-    onTertiary = on_tertiary_dark
+    onTertiary = on_tertiary_dark,
+    background = background_dark
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -28,7 +29,8 @@ private val LightColorScheme = lightColorScheme(
     tertiary = tertiary_light,
     onPrimary = on_primary_light,
     onSecondary = on_secondary_light,
-    onTertiary = on_tertiary_light
+    onTertiary = on_tertiary_light,
+    background = background_light
 )
 
 @SuppressLint("SuspiciousIndentation")
