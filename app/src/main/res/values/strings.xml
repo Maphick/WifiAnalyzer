@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">WifiAnalyzer</string>
+    <string name="access_point_name">РОСНЕФТЬ</string>
+    <string name="power">-63dBM</string>
+    <string name="address">fe:a7:be:c7:79:57</string>
+    <string name="encryption_standard">[WPA2] [PSK]</string>
+    <string name="frequency">2427 - 2447 (20MHz)</string>
+    <string name="powerВbm">-63dBm</string>
+    <string name="channel">CH 6</string>
+    <string name="remoteness">~ 13,8m</string>
 </resources>
