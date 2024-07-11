@@ -42,7 +42,7 @@ import com.makashovadev.wifianalyzer.domain.Status
 fun AccessPointCard(
     modifier: Modifier = Modifier,
     accessPoint: AccessPoint, // точка доступа
-    onInfoClickListener: () -> Unit, // обработчик нажатия на кнопку "Инфо"
+    //onInfoClickListener: () -> Unit, // обработчик нажатия на кнопку "Инфо"
 ) {
     Card(
         modifier = modifier
