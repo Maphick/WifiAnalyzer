@@ -19,7 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.livedata.observeAsState
 import com.makashovadev.wifianalyzer.domain.AccessPoint
+import com.makashovadev.wifianalyzer.domain.Client
 import com.makashovadev.wifianalyzer.ui.theme.AccessPointCard
+import com.makashovadev.wifianalyzer.ui.theme.ClientsScreen
 import com.makashovadev.wifianalyzer.ui.theme.WifiAnalyzerTheme
 
 
@@ -31,8 +33,25 @@ fun MainScreen(viewModel: MainViewModel) {
             .background(MaterialTheme.colorScheme.background)
             .padding(8.dp)
     ) {
+        // список точек доступа
         val accessPoints = viewModel.accessPoints.observeAsState(listOf())
+        if (accessPoints.value.isNotEmpty()) {
+            // список клиентов для сети
+            val clients = mutableListOf<Client>().apply {
+                repeat(20)
+                {
+                    add(
+                        Client(id = it)
+                    )
+                }
+            }
 
+            ClientsScreen(accessPoint = accessPoints.value.get(0), clients = clients )
+        }
+
+
+
+        /*
         LazyColumn(
             contentPadding = PaddingValues(
                 top = 16.dp, start = 8.dp, end = 8.dp, bottom = 8.dp // для нижней навигации
@@ -46,6 +65,7 @@ fun MainScreen(viewModel: MainViewModel) {
                     onInfoClickListener = {})
             }
         }
+        */
     }
 }
 
