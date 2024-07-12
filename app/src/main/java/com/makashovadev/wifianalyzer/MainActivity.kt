@@ -27,7 +27,8 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    
+
+    /*
     @Preview
     @Composable
     fun PreviewLight() {
@@ -44,5 +45,6 @@ class MainActivity : ComponentActivity() {
             MainScreen(viewModel)
         }
     }
+    */
     }
 
