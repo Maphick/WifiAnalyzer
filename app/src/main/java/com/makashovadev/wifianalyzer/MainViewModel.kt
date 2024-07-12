@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.makashovadev.wifianalyzer.domain.AccessPoint
 import com.makashovadev.wifianalyzer.domain.Status
+import com.makashovadev.wifianalyzer.ui.theme.HomeScreenState
 
 class MainViewModel: ViewModel() {
     private val sourceList = mutableListOf<AccessPoint>().apply {
@@ -18,6 +19,9 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    private val _accessPoints = MutableLiveData<List<AccessPoint>>(sourceList)
-    val accessPoints: LiveData<List<AccessPoint>> = _accessPoints
+    // исходный стейт
+    private val initialState =  HomeScreenState.Networks(networks = sourceList)
+    // текущий стейт экрана
+    private val _screenState = MutableLiveData<HomeScreenState>(initialState)
+    val screenState: LiveData<HomeScreenState> = _screenState
 }
