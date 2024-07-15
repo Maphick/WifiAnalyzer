@@ -48,7 +48,7 @@ fun AccessPointCard(
 ) {
     Card(
         modifier = modifier,
-            border = BorderStroke(2.dp,MaterialTheme.colorScheme.secondary)
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
     ) {
         Column(
             modifier = Modifier
@@ -124,7 +124,7 @@ fun PointHeader(
             Row(
                 modifier = Modifier.clickable {
                     onInfoClickListener()
-                }){
+                }) {
                 Icon(
                     imageVector = Icons.Outlined.Info,
                     contentDescription = null,

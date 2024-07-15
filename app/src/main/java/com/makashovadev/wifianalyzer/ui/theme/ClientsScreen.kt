@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,49 +36,54 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.makashovadev.wifianalyzer.ClientsViewModel
 import com.makashovadev.wifianalyzer.domain.AccessPoint
 import com.makashovadev.wifianalyzer.domain.Client
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClientsScreen(
-    accessPoint: AccessPoint, // сеть
-    clients: List<Client>, //  клиенты этой сети
     onBackPressed: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Clients for AccessPoint id: ${accessPoint.id}")
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onBackPressed()}) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null
-                        )
+    val viewModel: ClientsViewModel = viewModel()
+    val screenState = viewModel.screenState.observeAsState(ClientsScreenState.Initial)
+    val currentState = screenState.value
+    if (currentState is ClientsScreenState.ClientsState) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = "Clients for AccessPoint id: ${currentState.network.id}")
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { onBackPressed() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
                     }
+                )
+            }
+        )
+        { paddingsValues ->
+            LazyColumn(
+                modifier = Modifier.padding(paddingsValues),
+                contentPadding = PaddingValues(
+                    top = 16.dp,
+                    start = 8.dp,
+                    end = 8.dp,
+                    bottom = 72.dp
+                )
+            ) {
+                items(
+                    items = currentState.clients,
+                    key = { it.id }
+                )
+                { client ->
+                    ClientItem(client = client)
                 }
-            )
-        }
-    )
-    { paddingsValues ->
-        LazyColumn(
-            modifier = Modifier.padding(paddingsValues),
-            contentPadding = PaddingValues(
-                top = 16.dp,
-                start = 8.dp,
-                end = 8.dp,
-                bottom = 72.dp
-            )
-        ) {
-            items(
-                items = clients,
-                key = { it.id }
-            )
-            { client ->
-                ClientItem(client = client)
             }
         }
     }
@@ -90,10 +96,7 @@ private fun ClientItem(
 ) {
     Card(
         modifier = Modifier
-
-            //.height(100.dp)
             .padding(
-               // horizontal = 16.dp,
                 vertical = 4.dp
             ),
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
@@ -102,7 +105,7 @@ private fun ClientItem(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
                 .padding(
-                  //  top = 8.dp
+                    //  top = 8.dp
                 )
                 .padding(
                     top = 16.dp,
