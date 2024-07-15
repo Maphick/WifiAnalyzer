@@ -15,16 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.livedata.observeAsState
-import com.makashovadev.wifianalyzer.MainViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.makashovadev.wifianalyzer.NetworkViewModel
 import com.makashovadev.wifianalyzer.domain.AccessPoint
-import com.makashovadev.wifianalyzer.domain.Client
 
 
 @Composable
 fun HomeScreen(
-    viewModel: MainViewModel,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    onInfoClickListener: (AccessPoint) -> Unit
 ) {
+    val viewModel: NetworkViewModel = viewModel()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,31 +33,20 @@ fun HomeScreen(
             .padding(8.dp)
     ) {
         // стейт экрана: список сетей или список устройств
-        val screenState = viewModel.screenState.observeAsState(HomeScreenState.Initial)
-        val currentState = screenState.value
-        when (currentState) {
-            is HomeScreenState.Initial -> TODO()
-            is HomeScreenState.Networks -> {
+        val screenState = viewModel.screenState.observeAsState(NetworScreenState.Initial)
+        when (val currentState = screenState.value) {
+
+            is NetworScreenState.NetworksState -> {
                 Networks(
                     viewModel = viewModel,
                     paddingValues = paddingValues,
-                    networks = currentState.networks
+                    networks = currentState.networks,
+                    onInfoClickListener = onInfoClickListener
                 )
             }
+            is NetworScreenState.Initial -> {
 
-            is HomeScreenState.Clients -> {
-                ClientsScreen(
-                    accessPoint = currentState.network,
-                    clients = currentState.clients,
-                    onBackPressed = {
-                        viewModel.closeComments() }
-                )
-                BackHandler {
-                    viewModel.closeComments()
-                }
             }
-
-            null -> TODO()
         }
         /*
         // список точек доступа
@@ -82,9 +72,10 @@ fun HomeScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Networks(
-    viewModel: MainViewModel,
+    viewModel: NetworkViewModel,
     paddingValues: PaddingValues,
-    networks: List<AccessPoint>
+    networks: List<AccessPoint>,
+    onInfoClickListener: (AccessPoint) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(
@@ -97,8 +88,9 @@ fun Networks(
                 //modifier = Modifier.padding(8.dp),
                 accessPoint = accessPoint,
                 onInfoClickListener = {
+                    onInfoClickListener(accessPoint)
                     // открывает экран со списком усьройств, подключенных к этой сети
-                    viewModel.showClients(accessPoint)
+                    //viewModel.showClients(accessPoint)
                 })
         }
     }

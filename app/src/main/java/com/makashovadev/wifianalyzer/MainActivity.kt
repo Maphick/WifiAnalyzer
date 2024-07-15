@@ -7,14 +7,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.makashovadev.wifianalyzer.domain.AccessPoint
+import com.makashovadev.wifianalyzer.domain.Client
+import com.makashovadev.wifianalyzer.ui.theme.ClientsScreen
 import com.makashovadev.wifianalyzer.ui.theme.HomeScreen
 import com.makashovadev.wifianalyzer.ui.theme.WifiAnalyzerTheme
+import com.makashovadev.wifianalyzer.utils.RootUtils
 
 class MainActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +27,25 @@ class MainActivity : ComponentActivity() {
         val paddingValues: PaddingValues = PaddingValues(
             top = 16.dp, start = 8.dp, end = 8.dp, bottom = 72.dp // для нижней навигации
         )
+        val isDeviceRooted = RootUtils.hasRootAccess(this)
+
         setContent {
             WifiAnalyzerTheme {
-                HomeScreen(
-                    viewModel = viewModel,
-                    paddingValues = paddingValues
-                )
+                val clientsState: MutableState<AccessPoint?> = remember {
+                    mutableStateOf(null)
+                }
+                if (clientsState.value == null) {
+                    HomeScreen(
+                        paddingValues = paddingValues,
+                        onInfoClickListener = {
+                            clientsState.value = it
+                        }
+                    )
+                } else {
+                    ClientsScreen {
+                        clientsState.value = null
+                    }
+                }
             }
         }
     }
@@ -40,10 +58,7 @@ class MainActivity : ComponentActivity() {
             val paddingValues: PaddingValues = PaddingValues(
                 top = 16.dp, start = 8.dp, end = 8.dp, bottom = 72.dp // для нижней навигации
             )
-            HomeScreen(
-                viewModel = viewModel,
-                paddingValues = paddingValues
-            )
+
         }
     }
 
@@ -54,10 +69,7 @@ class MainActivity : ComponentActivity() {
             val paddingValues: PaddingValues = PaddingValues(
                 top = 16.dp, start = 8.dp, end = 8.dp, bottom = 72.dp // для нижней навигации
             )
-            HomeScreen(
-                viewModel = viewModel,
-                paddingValues = paddingValues
-            )
+
         }
     }
 
