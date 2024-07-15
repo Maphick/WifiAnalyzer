@@ -3,6 +3,7 @@ package com.makashovadev.wifianalyzer.ui.theme
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -54,7 +55,10 @@ fun AccessPointCard(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(8.dp)
         ) {
-            PointHeader(accessPoint)
+            PointHeader(
+                accessPoint,
+                onInfoClickListener
+            )
             Row(
                 modifier = Modifier
             )
@@ -82,7 +86,8 @@ fun AccessPointCard(
 
 @Composable
 fun PointHeader(
-    accessPoint: AccessPoint
+    accessPoint: AccessPoint,
+    onInfoClickListener: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -116,11 +121,16 @@ fun PointHeader(
                 ),
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Icon(
-                imageVector = Icons.Outlined.Info,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
-            )
+            Row(
+                modifier = Modifier.clickable {
+                    onInfoClickListener()
+                }){
+                Icon(
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
         }
     }
 }

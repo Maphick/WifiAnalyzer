@@ -1,5 +1,6 @@
 package com.makashovadev.wifianalyzer.ui.theme
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -46,8 +47,13 @@ fun HomeScreen(
             is HomeScreenState.Clients -> {
                 ClientsScreen(
                     accessPoint = currentState.network,
-                    clients = currentState.clients
+                    clients = currentState.clients,
+                    onBackPressed = {
+                        viewModel.closeComments() }
                 )
+                BackHandler {
+                    viewModel.closeComments()
+                }
             }
 
             null -> TODO()
@@ -90,7 +96,10 @@ fun Networks(
             AccessPointCard(
                 //modifier = Modifier.padding(8.dp),
                 accessPoint = accessPoint,
-                onInfoClickListener = {})
+                onInfoClickListener = {
+                    // открывает экран со списком усьройств, подключенных к этой сети
+                    viewModel.showClients(accessPoint)
+                })
         }
     }
 }

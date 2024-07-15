@@ -42,7 +42,8 @@ import com.makashovadev.wifianalyzer.domain.Client
 @Composable
 fun ClientsScreen(
     accessPoint: AccessPoint, // сеть
-    clients: List<Client> //  клиенты этой сети
+    clients: List<Client>, //  клиенты этой сети
+    onBackPressed: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -51,7 +52,7 @@ fun ClientsScreen(
                     Text(text = "Clients for AccessPoint id: ${accessPoint.id}")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { onBackPressed()}) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = null
