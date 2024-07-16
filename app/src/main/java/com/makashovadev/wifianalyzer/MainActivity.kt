@@ -42,9 +42,12 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 } else {
-                    ClientsScreen {
-                        clientsState.value = null
-                    }
+                    ClientsScreen(
+                        onBackPressed = {
+                            clientsState.value = null
+                        },
+                        network = clientsState.value!!
+                    )
                 }
             }
         }
