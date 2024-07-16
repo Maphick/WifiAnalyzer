@@ -38,15 +38,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.makashovadev.wifianalyzer.ClientsViewModel
+import com.makashovadev.wifianalyzer.ClientsViewModelFactory
 import com.makashovadev.wifianalyzer.domain.AccessPoint
 import com.makashovadev.wifianalyzer.domain.Client
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClientsScreen(
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    network: AccessPoint
 ) {
-    val viewModel: ClientsViewModel = viewModel()
+    val viewModel: ClientsViewModel = viewModel(
+        factory = ClientsViewModelFactory(network)
+    )
     val screenState = viewModel.screenState.observeAsState(ClientsScreenState.Initial)
     val currentState = screenState.value
     if (currentState is ClientsScreenState.ClientsState) {

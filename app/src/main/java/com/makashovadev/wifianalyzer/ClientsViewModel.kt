@@ -8,12 +8,14 @@ import com.makashovadev.wifianalyzer.domain.Client
 import com.makashovadev.wifianalyzer.ui.theme.ClientsScreenState
 import kotlin.random.Random
 
-class ClientsViewModel : ViewModel() {
+class ClientsViewModel(
+    network: AccessPoint
+) : ViewModel() {
     private val _screenState = MutableLiveData<ClientsScreenState>(ClientsScreenState.Initial)
     val screenState: LiveData<ClientsScreenState> = _screenState
 
     init {
-        LoadComments(AccessPoint())
+        LoadComments(network)
     }
 
     fun LoadComments(network: AccessPoint) {
