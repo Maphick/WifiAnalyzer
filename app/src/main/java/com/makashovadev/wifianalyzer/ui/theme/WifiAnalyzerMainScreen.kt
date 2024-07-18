@@ -1,6 +1,7 @@
 package com.makashovadev.wifianalyzer.ui.theme
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,18 +34,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.makashovadev.vknewsclient.navigation.Screen
 import com.makashovadev.vknewsclient.navigation.rememberNavigationState
+import com.makashovadev.wifianalyzer.SettingsViewModel
+import com.makashovadev.wifianalyzer.data.DataStoreRepository
 import com.makashovadev.wifianalyzer.domain.AccessPoint
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+   context: Context
+) {
     val navigationState = rememberNavigationState()
 
     // для сохранения состояния при переходе на экран со списком клиентов и обратно
     val clientsState: MutableState<AccessPoint?> = remember {
         mutableStateOf(null)
     }
+
+    val settingsViewModel: SettingsViewModel = SettingsViewModel(DataStoreRepository(context = context) )
 
     Scaffold(bottomBar = {
     }) { paddingValues ->
@@ -76,7 +83,8 @@ fun MainScreen() {
                 SettingsScreen(
                     onBackPressed = {
                         navigationState.navHostController.popBackStack()
-                    }
+                    },
+                    settingsViewModel = settingsViewModel
                         )
             },
             permissionScreenContent = { Text(text = "Permission Screen") })

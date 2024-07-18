@@ -1,4 +1,3 @@
 package com.makashovadev.wifianalyzer.domain
 
-enum class Status{ONLINE, OFLINE}
-
+enum class Sorting { }

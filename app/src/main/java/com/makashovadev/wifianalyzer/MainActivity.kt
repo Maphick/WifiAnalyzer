@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         val isDeviceRooted = RootUtils.hasRootAccess(this)
         setContent {
             WifiAnalyzerTheme {
-                MainScreen()
+                MainScreen(applicationContext)
             }
         }
     }
