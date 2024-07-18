@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -78,8 +79,8 @@ fun Networks(
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    // containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    titleContentColor = Color.Red,
+                    containerColor = MaterialTheme.colorScheme.background,
                 ),
                 title = {
                     Text(
@@ -110,8 +111,12 @@ fun Networks(
     )
     { paddingsValues ->
         LazyColumn(
+            modifier = Modifier.padding(paddingsValues),
             contentPadding = PaddingValues(
-                top = 16.dp, start = 8.dp, end = 8.dp, bottom = 8.dp // для нижней навигации
+                top = 16.dp,
+                start = 8.dp,
+                end = 8.dp,
+                bottom = 16.dp
             ),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {

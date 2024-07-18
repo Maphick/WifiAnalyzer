@@ -32,6 +32,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -61,8 +62,8 @@ fun ClientsScreen(
             topBar = {
                 CenterAlignedTopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(
-                        // containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                        titleContentColor = Color.Red,
+                        containerColor = MaterialTheme.colorScheme.background,
                     ),
                     title = {
                         Text(
@@ -96,7 +97,7 @@ fun ClientsScreen(
                     top = 16.dp,
                     start = 8.dp,
                     end = 8.dp,
-                    bottom = 72.dp
+                    bottom = 16.dp
                 )
             ) {
                 items(
