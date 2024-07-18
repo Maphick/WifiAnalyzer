@@ -8,4 +8,5 @@
     <string name="powerВbm">-63dBm</string>
     <string name="channel">CH 6</string>
     <string name="remoteness">~ 13,8m</string>
+    <string name="wifi_analyzer">WiFi Analyzer</string>
 </resources>
