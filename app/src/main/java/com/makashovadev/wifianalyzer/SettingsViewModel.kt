@@ -1,6 +1,5 @@
 package com.makashovadev.wifianalyzer
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,42 +16,32 @@ class SettingsViewModel(
     private val repository: DataStoreRepository
 ): ViewModel() {
 
-    private val _scanningIntervalPreference: MutableStateFlow<String> = MutableStateFlow("5")
-    var scanningIntervalPreference = _scanningIntervalPreference.asStateFlow()
-
-    private val _sortingPreference: MutableStateFlow<String> = MutableStateFlow("5")
-    var sortingPreference = _sortingPreference.asStateFlow()
-
-    private val _isSwitchOn: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var isSwitchOn = _isSwitchOn.asStateFlow()
-
     private val _isDisplaingSettings = MutableLiveData<Boolean>(false)
     var isDisplaingSettings : LiveData<Boolean> = _isDisplaingSettings
 
-
-    private val _textPreference: MutableStateFlow<String> = MutableStateFlow("")
-    var textPreference = _textPreference.asStateFlow()
-
-    private val _intPreference: MutableStateFlow<Int> = MutableStateFlow(0)
-    var intPreference = _intPreference.asStateFlow()
+    private val _isScanning = MutableLiveData<Boolean>(false)
+    var isScanning  : LiveData<Boolean> = _isScanning
 
 
     init {
         viewModelScope.launch {
             // чтение натсроек из базы
             repository.readDisplaySettingsState().collect { displaySettingsState ->
-                    _isDisplaingSettings.value = displaySettingsState
-                }
+                _isDisplaingSettings.value = displaySettingsState
             }
         }
-
-    fun toggleSwitch(){
-        _isSwitchOn.value = _isSwitchOn.value.not()
-        // сохранить в память
     }
 
-    //
-    fun displaySettingsChange()
+    // WIFI SETTINGS
+    fun changeIsScanning()
+    {
+        _isScanning.value = _isScanning.value?.not()
+    }
+
+
+
+    // DISPLAY SETTINGS
+    fun changeDisplaySettings()
     {
         _isDisplaingSettings.value = _isDisplaingSettings.value?.not()
         // сохранение настроек в юазу
@@ -67,18 +56,46 @@ class SettingsViewModel(
         }
     }
 
-
-    fun saveText(finalText: String) {
-        _textPreference.value = finalText
-        // сохранить в память
-    }
-
     fun saveScanningInterval(finalInterval: String)
     {
         val value = finalInterval.toIntOrNull() ?: 0
         _scanningIntervalPreference.value = value.toString()
         // сохранить в память
     }
+
+
+
+
+
+
+
+
+    private val _scanningIntervalPreference: MutableStateFlow<String> = MutableStateFlow("5")
+    var scanningIntervalPreference = _scanningIntervalPreference.asStateFlow()
+
+    private val _sortingPreference: MutableStateFlow<String> = MutableStateFlow("5")
+    var sortingPreference = _sortingPreference.asStateFlow()
+
+    private val _isSwitchOn: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    var isSwitchOn = _isSwitchOn.asStateFlow()
+
+
+
+
+    private val _textPreference: MutableStateFlow<String> = MutableStateFlow("")
+    var textPreference = _textPreference.asStateFlow()
+
+    private val _intPreference: MutableStateFlow<Int> = MutableStateFlow(0)
+    var intPreference = _intPreference.asStateFlow()
+
+
+
+
+    fun toggleSwitch(){
+        _isSwitchOn.value = _isSwitchOn.value.not()
+        // сохранить в память
+    }
+
 
 
     fun checkTextInput(text: String) = text.isNotEmpty()
@@ -107,4 +124,9 @@ class SettingsViewModel(
         const val TAG = "SettingsViewModel"
     }
 
+
+    fun saveText(finalText: String) {
+        _textPreference.value = finalText
+        // сохранить в память
+    }
 }

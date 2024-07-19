@@ -58,14 +58,19 @@ fun MainScreen(
         AppNavGraph(navHostController = navigationState.navHostController,
             accessPointsScreenContent = {
                 NetworksScreen(
-                    paddingValues = paddingValues,
+                    settingsViewModel = settingsViewModel,
+                    //paddingValues = paddingValues,
                     onInfoClickListener = {
                         clientsState.value = it
                         navigationState.navigateToClients()
                     },
                     onSettingsClickListener = {
                         navigationState.navigateTo(Screen.Settings.route)
+                    },
+                    nextScanAction = {
+                        // вызов функции для сканирования сети
                     }
+
                 )
 
             },

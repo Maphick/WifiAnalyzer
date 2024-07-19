@@ -52,6 +52,7 @@ android {
 dependencies {
     //implementation("eu.chainfire:libsuperuser:1.0.0.+")
     //implementation("eu.chainfire:libsuperuser:1.1.1")
+    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
     implementation("androidx.compose.material:material-icons-extended:1.6.8")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1")
@@ -68,6 +69,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.support.annotations)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.play.services.wallet)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
